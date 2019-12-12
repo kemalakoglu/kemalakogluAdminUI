@@ -1,15 +1,14 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {catchError, retry} from 'rxjs/internal/operators';
 import 'rxjs/add/operator/map';
-import {ToastrService} from 'ngx-toastr';
 import {throwError} from 'rxjs/index';
 
 @Injectable()
 export class APIService implements OnInit {
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
