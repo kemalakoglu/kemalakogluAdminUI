@@ -36,14 +36,14 @@ export class APIService implements OnInit {
       catchError(this.handleError),
     ).subscribe(data =>
       data);
-  }
+  };
 
   getWithOptions = (url, httpOptions) => this.http.get(url, httpOptions).pipe(
     retry(3), // retry a failed request up to 3 times
     catchError(this.handleError),
   ).subscribe(data => {
     return data;
-  })
+  });
 
   getWithObserveAndOptions = (url, httpOptions): Observable<any> => {
     // now returns an Observable of Config
@@ -51,13 +51,13 @@ export class APIService implements OnInit {
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     );
-  }
+  };
 
   getFullResponse = (url): Observable<HttpResponse<any>> => this.http.get<any>(
     url, {observe: 'response'}).pipe(
     retry(3), // retry a failed request up to 3 times
     catchError(this.handleError),
-  )
+  );
 
   post = (url, model) => this.http.post(url, model)
     .pipe(
@@ -65,7 +65,7 @@ export class APIService implements OnInit {
       catchError(this.handleError),
     ).toPromise().then((data: any) => {
       return data;
-    })
+    });
 
   postWithOptions = (url, model, httpOptions) => this.http.post(url, model, httpOptions)
     .pipe(
@@ -73,13 +73,13 @@ export class APIService implements OnInit {
       catchError(this.handleError),
     ).subscribe(data => {
       return data;
-    })
+    });
 
   postWithObserve = (url, model): Observable<HttpResponse<any>> => this.http.post<any>(url, model)
     .pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
-    )
+    );
 
   /*    postWithObserveAndOptions(url, model, httpOptions): Observable<HttpResponse<any>> {
           return this.http.post<any>(url, model, httpOptions)
