@@ -7,7 +7,6 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import {PageModule} from './page/page.module';
-import { ContentComponent } from './content/content.component';
 import {ContentModule} from './content/content.module';
 
 @NgModule({

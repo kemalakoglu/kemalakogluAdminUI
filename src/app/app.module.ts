@@ -12,7 +12,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
-import {APIService} from './Helper/service';
+import {APIService} from './custom-components/service';
 import { CommonModule } from '@angular/common';
 import {
   NbChatModule,
@@ -23,9 +23,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-
-
-
+import {ToastrComponent} from "./pages/modal-overlays/toastr/toastr.component";
 
 
 @NgModule({
@@ -55,6 +53,7 @@ import {
   ],
   providers: [
     APIService,
+    ToastrComponent,
   ],
 })
 export class AppModule {
