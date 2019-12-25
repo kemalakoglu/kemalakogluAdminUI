@@ -35,7 +35,7 @@ import { NewsService } from './news.service';
     NbListModule,
     NbAccordionModule,
     NbUserModule,
-    LayoutRoutingModule,
+    LayoutRoutingModule
   ],
   declarations: [
     LayoutComponent,
@@ -47,7 +47,7 @@ import { NewsService } from './news.service';
     NewsPostPlaceholderComponent,
     InfiniteListComponent,
     NewsPostComponent,
-    AccordionComponent,
+    AccordionComponent
   ],
   providers: [
     NewsService,

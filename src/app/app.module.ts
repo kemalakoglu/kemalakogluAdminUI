@@ -11,6 +11,9 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastrModule } from 'ngx-toastr';
+import {APIService} from './custom-components/service';
+import { CommonModule } from '@angular/common';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -20,6 +23,8 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import {ToastrComponent} from "./pages/modal-overlays/toastr/toastr.component";
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,21 +33,28 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
+    CommonModule,
     ThemeModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent,
+  ],
+  providers: [
+    APIService,
+    ToastrComponent,
+  ],
 })
 export class AppModule {
 }
