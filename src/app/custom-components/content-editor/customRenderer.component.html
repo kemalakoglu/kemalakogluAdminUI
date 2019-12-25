@@ -1,0 +1,15 @@
+<button nbButton (click)="openWithoutBackdropClick(dialog, rowData)">Edit Content</button>
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card size="giant">
+    <nb-card-header>Content Editor</nb-card-header>
+    <nb-card-body>
+      <ckeditor [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
+      </nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Close Dialog</button>
+      <button nbButton (click)="this.UpdateData()">Save</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
