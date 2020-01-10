@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('app/pages/login/auth/auth.module')
+    loadChildren: () => import('app/auth/auth.module')
       .then(m => m.AuthModule),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

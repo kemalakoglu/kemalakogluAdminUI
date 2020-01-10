@@ -12,7 +12,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
-import {APIService} from './custom-components/http-service/service';
+import { APIService} from './custom-components/http-service/service';
 import { CommonModule } from '@angular/common';
 import {
   NbChatModule,
