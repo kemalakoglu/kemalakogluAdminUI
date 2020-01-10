@@ -1,4 +1,4 @@
-export class RefTypeDTO {
+export class RefTypeDto {
 
   public Name: string;
   public Parent: any;

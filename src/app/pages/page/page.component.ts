@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {APIService} from '../../custom-components/service';
-import {RefTypeDTO} from './refTypeDTO';
+import {APIService} from '../../custom-components/http-service/service';
+import {RefTypeDto} from './ref-type-dto';
 import {ToastrComponent} from "../modal-overlays/toastr/toastr.component";
 import {keys} from "../../constants/keys";
 
@@ -12,7 +12,7 @@ import {keys} from "../../constants/keys";
   styleUrls: ['./page.component.scss'],
 })
 export class PageComponent implements OnInit {
-  request = new RefTypeDTO();
+  request = new RefTypeDto();
 
   settings = {
     add: {
@@ -115,7 +115,7 @@ export class PageComponent implements OnInit {
   onCreateConfirm(event): void {
     if (window.confirm('Are you sure you want to create?')) {
       this.request.Name = event.newData.name;
-      this.request.Parent = new RefTypeDTO();
+      this.request.Parent = new RefTypeDto();
       this.request.Parent.Id = 1;
       this.request.Status=true;
       this.request.IsActive=event.newData.isActive;

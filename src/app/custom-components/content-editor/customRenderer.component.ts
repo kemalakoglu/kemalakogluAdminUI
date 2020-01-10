@@ -2,11 +2,11 @@ import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 import {NbDialogService} from "@nebular/theme";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {APIService} from "../service";
+import {APIService} from "../http-service/service";
 import {keys} from "../../constants/keys";
-import {RefValueDTO} from "../../pages/content/refValueDTO";
+import {RefValueDto} from "../../pages/content/ref-value-dto";
 import {ToastrComponent} from "../../pages/modal-overlays/toastr/toastr.component";
-import {RefTypeDTO} from "../../pages/page/refTypeDTO";
+import {RefTypeDto} from "../../pages/page/ref-type-dto";
 
 @Component({
   templateUrl: './customRenderer.component.html',
@@ -17,7 +17,7 @@ export class CustomRendererComponent implements ViewCell, OnInit {
   @Input() rowData: any;  // This holds the entire row object
   @Input() dialog: TemplateRef<any>;    // This hold the cell value
   contextData:any;
-  editRequest = new RefValueDTO();
+  editRequest = new RefValueDto();
   public Editor = ClassicEditor;
   public model = {
     editorData: ''

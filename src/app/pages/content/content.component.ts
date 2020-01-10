@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {APIService} from '../../custom-components/service';
-import {AddRefValueRequestDTO} from './addRefValueRequestDTO';
+import {APIService} from '../../custom-components/http-service/service';
+import {AddRefValueRequestDto} from './add-ref-value-request-dto';
 import {CustomRendererComponent} from "../../custom-components/content-editor/customRenderer.component";
 import {keys} from "../../constants/keys";
 import {ToastrComponent} from "../modal-overlays/toastr/toastr.component";
-import {RefTypeDTO} from "../page/refTypeDTO";
-import {RefValueDTO} from "./refValueDTO";
+import {RefTypeDto} from "../page/ref-type-dto";
+import {RefValueDto} from "./ref-value-dto";
 
 @Component({
   selector: 'ngx-content',
@@ -16,8 +16,8 @@ import {RefValueDTO} from "./refValueDTO";
 export class ContentComponent implements OnInit {
 
   selectList = [];
-  addRequest = new AddRefValueRequestDTO();
-  editRequest = new RefValueDTO();
+  addRequest = new AddRefValueRequestDto();
+  editRequest = new RefValueDto();
   settings: object;
   source: LocalDataSource = new LocalDataSource();
 
@@ -48,7 +48,7 @@ export class ContentComponent implements OnInit {
       this.editRequest.Name = event.newData.name;
       this.editRequest.Id = event.newData.id;
       this.editRequest.IsActive = event.newData.isActive;
-      let refType= new RefTypeDTO();
+      let refType= new RefTypeDto();
       refType.Id= event.newData.refType;
       this.editRequest.RefType= refType;
       this.editRequest.Value = event.newData.value;
