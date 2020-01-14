@@ -4,10 +4,12 @@ import { PagesComponent } from './pages.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import {PageComponent} from './page/page.component';
 import {ContentComponent} from "./content/content.component";
+import {AuthGuard} from "../auth/login/_helpers";
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
+  canActivate: [AuthGuard],
   children: [
     {
       path: '',
