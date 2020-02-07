@@ -66,6 +66,13 @@ export class APIService implements OnInit {
       return data;
     });
 
+  postSingle = (url, model) => this.http.post(url, model)
+    .pipe(
+      catchError(this.handleError),
+    ).toPromise().then((data: any) => {
+      return data;
+    });
+
   postWithOptions = (url, model, httpOptions) => this.http.post(url, model, httpOptions)
     .pipe(
       retry(3), // retry a failed request up to 3 times
@@ -74,9 +81,16 @@ export class APIService implements OnInit {
       return data;
     });
 
+   postAsync = (url, model) => this.http.post(url, model)
+     .pipe(
+       catchError(this.handleError),
+     ).toPromise().then((data: any) => {
+       return data;
+     });
+
   postWithObserve = (url, model): Observable<HttpResponse<any>> => this.http.post<any>(url, model)
     .pipe(
-      retry(3), // retry a failed request up to 3 times
+      //retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     );
 
