@@ -52,7 +52,7 @@ export class CustomRendererComponent implements ViewCell, OnInit {
     this.editRequest.IsActive = this.contextData.isActive;
     this.editRequest.Value = this.model.editorData;
     this.editRequest.RefType= this.contextData.refType;
-    this.apiService.post(
+    this.apiService.postWithToken(
       keys.apiAddress + 'RefValue/UpdateRefValue',
       this.editRequest).then((data: any) =>{
       this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );

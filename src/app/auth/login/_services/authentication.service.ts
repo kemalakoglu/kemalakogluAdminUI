@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {User} from "../_models";
 import {keys} from "../../../constants/keys";
@@ -29,8 +29,13 @@ export class AuthenticationService {
               .then((data: any) => {
                 this.user.token=data.token;
                 this.user.username= data.username;
-                var test= JSON.stringify(this.user);
                 localStorage.setItem('currentUser', JSON.stringify(this.user));
+                keys.httpOptions = {
+                  headers: new HttpHeaders({
+                    'Content-Type':  'application/json',
+                    'Authorization':  localStorage.getItem('currentUser'),
+                  }),
+                };
                 this.currentUserSubject.next(data);
                 this.router.navigate(['/pages/page']);
               })
@@ -48,6 +53,7 @@ export class AuthenticationService {
           this.currentUserSubject.next(null);
           this.currentUserValue;
           this.user= null;
+          keys.httpOptions=null;
           this.router.navigate(['/login']);
         })
         .catch((error: any) => console.log(error));

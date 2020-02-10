@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import {catchError, retry} from 'rxjs/internal/operators';
 import 'rxjs/add/operator/map';
 import {throwError} from 'rxjs/index';
+import {keys} from "../../constants/keys";
 
 @Injectable()
 export class APIService implements OnInit {
@@ -14,15 +15,16 @@ export class APIService implements OnInit {
   ngOnInit() {
   }
 
-  httpOptions: any = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token',
-    }),
-  };
-
    get(url) {
     return this.http.get(url).pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError),
+    ).toPromise().then((data: any) =>
+      data);
+  }
+
+  getWithToken(url) {
+    return this.http.get(url, keys.httpOptions).pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     ).toPromise().then((data: any) =>
@@ -66,6 +68,14 @@ export class APIService implements OnInit {
       return data;
     });
 
+  postWithToken = (url, model) => this.http.post(url, model, keys.httpOptions)
+    .pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError),
+    ).toPromise().then((data:any) => {
+      return data;
+    });
+
   postSingle = (url, model) => this.http.post(url, model)
     .pipe(
       catchError(this.handleError),
@@ -77,7 +87,7 @@ export class APIService implements OnInit {
     .pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
-    ).subscribe(data => {
+    ).toPromise().then((data:any) => {
       return data;
     });
 
