@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {APIService} from '../../custom-components/service';
-import {RefTypeDTO} from './refTypeDTO';
+import {APIService} from '../../custom-components/http-service/service';
+import {RefTypeDto} from './ref-type-dto';
 import {ToastrComponent} from "../modal-overlays/toastr/toastr.component";
 import {keys} from "../../constants/keys";
 
@@ -12,7 +12,7 @@ import {keys} from "../../constants/keys";
   styleUrls: ['./page.component.scss'],
 })
 export class PageComponent implements OnInit {
-  request = new RefTypeDTO();
+  request = new RefTypeDto();
 
   settings = {
     add: {
@@ -83,7 +83,7 @@ export class PageComponent implements OnInit {
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
 
-      this.service.get(keys.apiAddress + 'RefType/SoftDeleteRefType?id=' + event.data.id).then((data: any) => {
+      this.service.getWithToken(keys.apiAddress + 'RefType/SoftDeleteRefType?id=' + event.data.id).then((data: any) => {
         this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
         event.confirm.resolve();
       }).catch((error: any) =>
@@ -99,7 +99,7 @@ export class PageComponent implements OnInit {
       this.request.Id = event.newData.id;
       this.request.IsActive = event.newData.isActive;
       // this.request.Parent= event.newData.parent;
-      this.service.post(
+      this.service.postWithToken(
         keys.apiAddress + 'RefType/UpdateRefType',
         this.request).then((data: any) =>{
           this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
@@ -115,11 +115,11 @@ export class PageComponent implements OnInit {
   onCreateConfirm(event): void {
     if (window.confirm('Are you sure you want to create?')) {
       this.request.Name = event.newData.name;
-      this.request.Parent = new RefTypeDTO();
+      this.request.Parent = new RefTypeDto();
       this.request.Parent.Id = 1;
       this.request.Status=true;
       this.request.IsActive=event.newData.isActive;
-      this.service.post(
+      this.service.postWithToken(
         keys.apiAddress + 'RefType/AddRefType',
         this.request).then((data: any) =>{
         this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
@@ -132,7 +132,7 @@ export class PageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.get(keys.apiAddress + 'RefType/GetRefTypesByParent?parentId=1').then((data: any) =>
+    this.service.getWithToken(keys.apiAddress + 'RefType/GetRefTypesByParent?parentId=1').then((data: any) =>
       this.source.load(data.data)).catch((error: any) =>
       this.toastr.showToast("danger" , "Operation Failed" , 'Message: ' + error.error.Message + ' RC: ' + error.error.RC));
   }

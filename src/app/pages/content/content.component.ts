@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {APIService} from '../../custom-components/service';
-import {AddRefValueRequestDTO} from './addRefValueRequestDTO';
+import {APIService} from '../../custom-components/http-service/service';
+import {AddRefValueRequestDto} from './add-ref-value-request-dto';
 import {CustomRendererComponent} from "../../custom-components/content-editor/customRenderer.component";
 import {keys} from "../../constants/keys";
 import {ToastrComponent} from "../modal-overlays/toastr/toastr.component";
-import {RefTypeDTO} from "../page/refTypeDTO";
-import {RefValueDTO} from "./refValueDTO";
+import {RefTypeDto} from "../page/ref-type-dto";
+import {RefValueDto} from "./ref-value-dto";
 
 @Component({
   selector: 'ngx-content',
@@ -16,8 +16,8 @@ import {RefValueDTO} from "./refValueDTO";
 export class ContentComponent implements OnInit {
 
   selectList = [];
-  addRequest = new AddRefValueRequestDTO();
-  editRequest = new RefValueDTO();
+  addRequest = new AddRefValueRequestDto();
+  editRequest = new RefValueDto();
   settings: object;
   source: LocalDataSource = new LocalDataSource();
 
@@ -33,7 +33,7 @@ export class ContentComponent implements OnInit {
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       this.editRequest = event.data;
-      this.service.post(keys.apiAddress + 'RefValue/DeleteRefValue', this.editRequest).then((data: any) => {
+      this.service.postWithToken(keys.apiAddress + 'RefValue/DeleteRefValue', this.editRequest).then((data: any) => {
         this.toastr.showToast("success", "Operation Succeeded", 'Message: ' + data.message);
         event.confirm.resolve();
       }).catch((error: any) =>
@@ -48,11 +48,11 @@ export class ContentComponent implements OnInit {
       this.editRequest.Name = event.newData.name;
       this.editRequest.Id = event.newData.id;
       this.editRequest.IsActive = event.newData.isActive;
-      let refType= new RefTypeDTO();
+      let refType= new RefTypeDto();
       refType.Id= event.newData.refType;
       this.editRequest.RefType= refType;
       this.editRequest.Value = event.newData.value;
-      this.service.post(
+      this.service.postWithToken(
         keys.apiAddress + 'RefValue/UpdateRefValue',
         this.editRequest).then((data: any) =>{
         this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
@@ -70,7 +70,7 @@ export class ContentComponent implements OnInit {
       this.addRequest.Name = event.newData.name;
       this.addRequest.RefTypeId = event.newData.refType;
       this.addRequest.IsActive = event.newData.isActive;
-      this.service.post(keys.apiAddress + 'RefValue/AddRefValue', this.addRequest).then((data: any) =>{
+      this.service.postWithToken(keys.apiAddress + 'RefValue/AddRefValue', this.addRequest).then((data: any) =>{
         this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
         event.confirm.resolve();
       }).catch((error: any) =>
@@ -157,18 +157,17 @@ export class ContentComponent implements OnInit {
   }
 
   private getData() {
-    this.service.get(keys.apiAddress + 'RefValue/GetRefValuesByPage')
+    this.service.getWithToken(keys.apiAddress + 'RefValue/GetRefValuesByPage')
       .then((data:any)=>this.source.load(data.data))
       .then(()=> this.settings = this.loadTableStettings());
   }
 
   private getPageList() {
-    this.service.get(keys.apiAddress + 'RefType/GetRefTypesByParent?parentId=1').then((data: any) => {
+    this.service.getWithToken(keys.apiAddress + 'RefType/GetRefTypesByParent?parentId=1').then((data: any) => {
       for (let i = 0; i < data.data.length; i++) {
         this.selectList.push({value: data.data[i].id, title: data.data[i].name});
       };
     });
   }
-
 }
 

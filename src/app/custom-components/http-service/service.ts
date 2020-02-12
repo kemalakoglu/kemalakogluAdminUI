@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import {catchError, retry} from 'rxjs/internal/operators';
 import 'rxjs/add/operator/map';
 import {throwError} from 'rxjs/index';
+import {keys} from "../../constants/keys";
 
 @Injectable()
 export class APIService implements OnInit {
@@ -14,15 +15,16 @@ export class APIService implements OnInit {
   ngOnInit() {
   }
 
-  httpOptions: any = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token',
-    }),
-  };
-
    get(url) {
     return this.http.get(url).pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError),
+    ).toPromise().then((data: any) =>
+      data);
+  }
+
+  getWithToken(url) {
+    return this.http.get(url, keys.httpOptions).pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     ).toPromise().then((data: any) =>
@@ -66,17 +68,39 @@ export class APIService implements OnInit {
       return data;
     });
 
+  postWithToken = (url, model) => this.http.post(url, model, keys.httpOptions)
+    .pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError),
+    ).toPromise().then((data:any) => {
+      return data;
+    });
+
+  postSingle = (url, model) => this.http.post(url, model)
+    .pipe(
+      catchError(this.handleError),
+    ).toPromise().then((data: any) => {
+      return data;
+    });
+
   postWithOptions = (url, model, httpOptions) => this.http.post(url, model, httpOptions)
     .pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
-    ).subscribe(data => {
+    ).toPromise().then((data:any) => {
       return data;
     });
 
+   postAsync = (url, model) => this.http.post(url, model)
+     .pipe(
+       catchError(this.handleError),
+     ).toPromise().then((data: any) => {
+       return data;
+     });
+
   postWithObserve = (url, model): Observable<HttpResponse<any>> => this.http.post<any>(url, model)
     .pipe(
-      retry(3), // retry a failed request up to 3 times
+      //retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     );
 
