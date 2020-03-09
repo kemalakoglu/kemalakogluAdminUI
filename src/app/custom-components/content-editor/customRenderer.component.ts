@@ -20,7 +20,8 @@ export class CustomRendererComponent implements ViewCell, OnInit {
   editRequest = new RefValueDto();
   public Editor = ClassicEditor;
   public model = {
-    editorData: ''
+    editorData: '',
+    descriptionData:''
   };
 
   constructor(private dialogService: NbDialogService, private apiService: APIService, private toastr:ToastrComponent) {}
@@ -36,6 +37,7 @@ export class CustomRendererComponent implements ViewCell, OnInit {
         closeOnBackdropClick: false,
       });
     this.model.editorData=rowData.value;
+    this.model.descriptionData= rowData.description;
     this.contextData=rowData;
   }
 
@@ -52,6 +54,9 @@ export class CustomRendererComponent implements ViewCell, OnInit {
     this.editRequest.IsActive = this.contextData.isActive;
     this.editRequest.Value = this.model.editorData;
     this.editRequest.RefType= this.contextData.refType;
+    this.editRequest.Image=this.contextData.image;
+    this.editRequest.ImageText=this.contextData.imageText;
+    this.editRequest.Description = this.model.descriptionData;
     this.apiService.postWithToken(
       keys.apiAddress + 'RefValue/UpdateRefValue',
       this.editRequest).then((data: any) =>{

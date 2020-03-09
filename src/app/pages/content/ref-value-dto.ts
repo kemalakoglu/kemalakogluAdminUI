@@ -7,5 +7,8 @@ export class RefValueDto{
   public Name: string;
   public Status: boolean;
   public IsActive: boolean;
+  public Description: string;
+  public Image: string;
+  public ImageText: string;
 }
 

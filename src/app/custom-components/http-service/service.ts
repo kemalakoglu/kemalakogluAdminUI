@@ -24,7 +24,12 @@ export class APIService implements OnInit {
   }
 
   getWithToken(url) {
-    return this.http.get(url, keys.httpOptions).pipe(
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  localStorage.getItem('currentUser'),
+      }),
+    }).pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),
     ).toPromise().then((data: any) =>
@@ -68,7 +73,12 @@ export class APIService implements OnInit {
       return data;
     });
 
-  postWithToken = (url, model) => this.http.post(url, model, keys.httpOptions)
+  postWithToken = (url, model) => this.http.post(url, model, {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization':  localStorage.getItem('currentUser'),
+    }),
+  })
     .pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError),

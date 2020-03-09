@@ -30,12 +30,6 @@ export class AuthenticationService {
                 this.user.token=data.token;
                 this.user.username= data.username;
                 localStorage.setItem('currentUser', JSON.stringify(this.user));
-                keys.httpOptions = {
-                  headers: new HttpHeaders({
-                    'Content-Type':  'application/json',
-                    'Authorization':  localStorage.getItem('currentUser'),
-                  }),
-                };
                 this.currentUserSubject.next(data);
                 this.router.navigate(['/pages/page']);
               })
@@ -53,7 +47,6 @@ export class AuthenticationService {
           this.currentUserSubject.next(null);
           this.currentUserValue;
           this.user= null;
-          keys.httpOptions=null;
           this.router.navigate(['/login']);
         })
         .catch((error: any) => console.log(error));

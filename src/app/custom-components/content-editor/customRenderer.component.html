@@ -3,7 +3,12 @@
   <nb-card size="giant">
     <nb-card-header>Content Editor</nb-card-header>
     <nb-card-body>
-      <ckeditor [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
+      <div class="col col-md-12">
+        <ckeditor [editor]="Editor" [(ngModel)]="model.descriptionData" (ready)="onReady($event)"></ckeditor>
+      </div>
+      <div class="col col-md-12">
+        <ckeditor [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
+      </div>
     </nb-card-body>
     <nb-card-footer>
       <button nbButton (click)="ref.close()">Close Dialog</button>

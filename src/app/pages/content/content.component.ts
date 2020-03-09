@@ -52,6 +52,8 @@ export class ContentComponent implements OnInit {
       refType.Id= event.newData.refType;
       this.editRequest.RefType= refType;
       this.editRequest.Value = event.newData.value;
+      this.editRequest.Image=event.newData.image;
+      this.editRequest.ImageText=event.newData.imageText;
       this.service.postWithToken(
         keys.apiAddress + 'RefValue/UpdateRefValue',
         this.editRequest).then((data: any) =>{
@@ -70,6 +72,8 @@ export class ContentComponent implements OnInit {
       this.addRequest.Name = event.newData.name;
       this.addRequest.RefTypeId = event.newData.refType;
       this.addRequest.IsActive = event.newData.isActive;
+      this.addRequest.Image=event.newData.image;
+      this.addRequest.ImageText=event.newData.imageText;
       this.service.postWithToken(keys.apiAddress + 'RefValue/AddRefValue', this.addRequest).then((data: any) =>{
         this.toastr.showToast("success" , "Operation Succeeded" , 'Message: ' + data.message );
         event.confirm.resolve();
@@ -134,6 +138,14 @@ export class ContentComponent implements OnInit {
           type: 'string',
           editable: false,
           addable: false,
+        },
+        image: {
+          title: 'Image Url',
+          type: 'string',
+        },
+        imageText: {
+          title: 'Image Text',
+          type: 'string',
         },
         isActive: {
           title: 'Is Active',
