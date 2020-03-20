@@ -4,9 +4,11 @@
     <nb-card-header>Content Editor</nb-card-header>
     <nb-card-body>
       <div class="col col-md-12">
+        <a>Description</a>
         <ckeditor [editor]="Editor" [(ngModel)]="model.descriptionData" (ready)="onReady($event)"></ckeditor>
       </div>
       <div class="col col-md-12">
+        <a>Value</a>
         <ckeditor [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
       </div>
     </nb-card-body>
