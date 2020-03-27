@@ -1,4 +1,4 @@
 export class keys{
-  public static apiAddress:string= 'https://localhost:44364/api/';
+  public static apiAddress:string= 'http://localhost:8080/api/';
 }
 
